@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/ShawnFrost26/namaste_react/issues"
   },
-  "homepage": "https://github.com/ShawnFrost26/namaste_react#readme"
+  "homepage": "https://github.com/ShawnFrost26/namaste_react#readme",
+  "devDependencies": {
+    "parcel": "^2.11.0"
+  }
 }
