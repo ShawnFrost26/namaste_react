@@ -1,41 +1,5 @@
-// const heading = React.createElement(
-//   "h1",
-//   { id: "heading" },
-//   "Hello World from React!!"
-// );
-
-//creating nested div elements with react
-/*
-<div id="parent">
-  <div id="child">
-    <h1>Nested elements from React!!</h1>
-  </div>
-</div>
-*/
-
-// const nestedElements = React.createElement(
-//   "div",
-//   { id: "parent" },
-//   React.createElement(
-//     "div",
-//     { id: "child" },
-//     React.createElement("h1", {}, "Nested elements from React!!")
-//   )
-// );
-// console.log(nestedElements);
-
-/*
-<div id="parent">
-  <div id="child">
-    <h1>Nested elements from React!!</h1>
-    <h2>I am a h2 tag</h2>
-  </div>
-  <div id="child2">
-    <h1>Nested elements from React!!</h1>
-    <h2>I am a h2 tag</h2>
-  </div>
-</div>
-*/
+import React from "react";
+import ReactDOM from "react-dom/client";
 
 const nestedElements = React.createElement(
   "div",
