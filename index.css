@@ -48,3 +48,14 @@ img.res-logo {
   height: 150px;
   object-fit: cover;
 }
+.filter-btn {
+  padding: 8px;
+}
+.filter-btn:hover {
+  cursor: pointer;
+}
+.filter {
+  display: flex;
+  justify-content: center;
+  margin: 8px;
+}
