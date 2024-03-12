@@ -25,12 +25,13 @@
   text-align: center;
 }
 .res-container {
+  margin: 0 0px;
   padding: 0 16px;
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 6px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 .res-card {
   width: 250px;
