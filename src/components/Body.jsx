@@ -1,30 +1,54 @@
+import React, { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
-import resObj from "../utils/mockData";
-import { useState } from "react";
 
 const Body = () => {
-  const [listOfRes, setListOfRes] = useState(resObj);
+  const [listOfRes, setListOfRes] = useState([]);
   const [searchWord, setSearchWord] = useState("");
+  const [filteredRes, setFilteredRes] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const response = await fetch(
+      "https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/list/v5?lat=20.2960587&lng=85.8245398&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+    );
+    const data = await response.json();
+
+    const restaurants =
+      data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants;
+    console.log("restaurants", restaurants);
+    setListOfRes(restaurants);
+    setFilteredRes(restaurants);
+  };
+  console.log("filteredRes after fetchData", filteredRes);
 
   const handleTopRatedRes = () => {
-    filteredList = listOfRes.filter((res) => res.info.avgRating > 4.5);
-    setListOfRes(filteredList);
+    const filteredList = listOfRes.filter((res) => res.info.avgRating >= 4.5);
+    setFilteredRes(filteredList);
   };
 
-  const handleSearch = (e) => {
-    const inputText = e.target.value;
-    setSearchWord(inputText);
-
-    if (!inputText || inputText.trim() == "") {
-      // If the search bar is empty, reset the list to the original data
-      setListOfRes(resObj);
-    } else {
-      const searchList = resObj.filter((res) =>
-        res.info.name.toLowerCase().includes(inputText.toLowerCase())
-      );
-      setListOfRes(searchList);
-    }
+  const handleSearch = () => {
+    setFilteredRes(
+      listOfRes.filter((res) =>
+        res.info.name.toLowerCase().includes(searchWord.toLowerCase())
+      )
+    );
   };
+
+  const handleClear = () => {
+    setSearchWord("");
+    setFilteredRes(listOfRes);
+  };
+
+  const handleSearchInputChange = (e) => {
+    setSearchWord(e.target.value);
+  };
+  if (!filteredRes === 0) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <div className="body">
@@ -33,9 +57,14 @@ const Body = () => {
           type="search"
           placeholder="Search here"
           value={searchWord}
-          onChange={handleSearch}
+          onChange={handleSearchInputChange}
         />
-        {/* <button onClick={handleSearch}>Search</button> */}
+        <button className="search-btn" onClick={handleSearch}>
+          Search
+        </button>
+        <button className="clear-btn" onClick={handleClear}>
+          Clear
+        </button>
       </div>
       <div className="filter">
         <button className="filter-btn" onClick={handleTopRatedRes}>
@@ -43,11 +72,13 @@ const Body = () => {
         </button>
       </div>
       <div className="res-container">
-        {listOfRes.map((restaurant) => (
+        {console.log("filteredRes inside return:", filteredRes)}
+        {filteredRes.map((restaurant) => (
           <RestaurantCard key={restaurant.info.id} restaurant={restaurant} />
         ))}
       </div>
     </div>
   );
 };
+
 export default Body;
