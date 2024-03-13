@@ -49,9 +49,9 @@ img.res-logo {
   height: 150px;
   object-fit: cover;
 }
-.filter-btn {
+/* .filter-btn {
   padding: 8px;
-}
+} */
 .filter-btn:hover {
   cursor: pointer;
 }
@@ -68,5 +68,9 @@ img.res-logo {
 .shimmer-card {
   width: 250px;
   height: 325px;
-  background-color: #f0f0f0
+  background-color: #f0f0f0;
+}
+.login {
+  padding: 6px;
+  cursor: pointer;
 }

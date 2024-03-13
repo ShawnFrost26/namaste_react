@@ -6,6 +6,7 @@ const Body = () => {
   const [listOfRes, setListOfRes] = useState([]);
   const [searchWord, setSearchWord] = useState("");
   const [filteredRes, setFilteredRes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchData();
@@ -23,6 +24,7 @@ const Body = () => {
         ?.restaurants;
     setListOfRes(restaurants);
     setFilteredRes(restaurants);
+    setLoading(false);
   };
 
   const handleTopRatedRes = () => {
@@ -46,35 +48,38 @@ const Body = () => {
   const handleSearchInputChange = (e) => {
     setSearchWord(e.target.value);
   };
-  if (filteredRes.length === 0) {
-    return <Shimmer />;
-  }
+  // if (filteredRes.length === 0) {
+  //   return <Shimmer />;
+  // }
 
   return (
     <div className="body">
-      <div className="search">
-        <input
-          type="search"
-          placeholder="Search here"
-          value={searchWord}
-          onChange={handleSearchInputChange}
-        />
-        <button className="search-btn" onClick={handleSearch}>
-          Search
-        </button>
-        <button className="clear-btn" onClick={handleClear}>
-          Clear
-        </button>
-      </div>
       <div className="filter">
+        <div className="search">
+          <input
+            type="search"
+            placeholder="Search here"
+            value={searchWord}
+            onChange={handleSearchInputChange}
+          />
+          <button className="search-btn" onClick={handleSearch}>
+            Search
+          </button>
+          <button className="clear-btn" onClick={handleClear}>
+            Clear
+          </button>
+        </div>
+
         <button className="filter-btn" onClick={handleTopRatedRes}>
           Top Rated Restaurants
         </button>
       </div>
       <div className="res-container">
         {/* {console.log("filteredRes inside return:", filteredRes)} */}
-        {filteredRes.length === 0 ? (
+        {loading ? (
           <Shimmer />
+        ) : filteredRes.length === 0 ? (
+          <h1 className="no-results">No results found!!!</h1>
         ) : (
           filteredRes.map((restaurant) => (
             <RestaurantCard key={restaurant.info.id} restaurant={restaurant} />
