@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
+import Shimmer from "./Shimmer";
 
 const Body = () => {
   const [listOfRes, setListOfRes] = useState([]);
@@ -15,15 +16,14 @@ const Body = () => {
       "https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/list/v5?lat=20.2960587&lng=85.8245398&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
     const data = await response.json();
+    // console.log("data:::", data);
 
     const restaurants =
-      data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+      data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants;
-    console.log("restaurants", restaurants);
     setListOfRes(restaurants);
     setFilteredRes(restaurants);
   };
-  console.log("filteredRes after fetchData", filteredRes);
 
   const handleTopRatedRes = () => {
     const filteredList = listOfRes.filter((res) => res.info.avgRating >= 4.5);
@@ -46,8 +46,8 @@ const Body = () => {
   const handleSearchInputChange = (e) => {
     setSearchWord(e.target.value);
   };
-  if (!filteredRes === 0) {
-    return <h1>Loading...</h1>;
+  if (filteredRes.length === 0) {
+    return <Shimmer />;
   }
 
   return (
@@ -72,10 +72,14 @@ const Body = () => {
         </button>
       </div>
       <div className="res-container">
-        {console.log("filteredRes inside return:", filteredRes)}
-        {filteredRes.map((restaurant) => (
-          <RestaurantCard key={restaurant.info.id} restaurant={restaurant} />
-        ))}
+        {/* {console.log("filteredRes inside return:", filteredRes)} */}
+        {filteredRes.length === 0 ? (
+          <Shimmer />
+        ) : (
+          filteredRes.map((restaurant) => (
+            <RestaurantCard key={restaurant.info.id} restaurant={restaurant} />
+          ))
+        )}
       </div>
     </div>
   );

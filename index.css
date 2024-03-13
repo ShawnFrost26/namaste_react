@@ -60,3 +60,13 @@ img.res-logo {
   justify-content: center;
   margin: 8px;
 }
+.shimmer-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.shimmer-card {
+  width: 250px;
+  height: 325px;
+  background-color: #f0f0f0
+}
